@@ -1,0 +1,7 @@
+{% extends "base.djhtml" %}
+
+{% block content %}
+  {% for event in events %}
+    {% include "event-item.djhtml" %}
+  {% endfor %}
+{% endblock %}

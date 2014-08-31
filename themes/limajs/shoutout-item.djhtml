@@ -1,0 +1,3 @@
+<div class="shoutout">
+  <a href="{{ shoutout.url }}">{{ shoutout.text }}</a>
+</div>

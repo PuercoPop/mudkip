@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ config.lang }}">
+  <head>
+    {% block title %}<title> {{ config.title }}</title>{% endblock %}
+    <meta http-equiv="content-type" content="text/html; charset={{ config.charset }}" />
+    <link href="{{ config.domain }}/css/style.css" />
+    {{ injections.head|safe }}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+    {{ injections.body|safe }}
+  </body>
+</html>

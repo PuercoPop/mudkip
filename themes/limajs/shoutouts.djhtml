@@ -1,0 +1,7 @@
+{% extends "base.djhtml" %}
+
+{% block content %}
+  {% for shoutout in shoutouts %}
+    {% include "shoutout-item.djhtml" %}
+  {% endfor %}
+{% endblock %}

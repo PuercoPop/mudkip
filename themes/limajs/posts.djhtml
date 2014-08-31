@@ -1,0 +1,7 @@
+{% extends "base.djhtml" %}
+
+{% block content %}
+  {% for post in posts %}
+    {% include "post-item.djhtml" %}
+  {% endfor %}
+{% endblock %}

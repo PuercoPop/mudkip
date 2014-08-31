@@ -1,0 +1,11 @@
+;;;; -*- mode: lisp -*-
+(:base #P"limajs/base.djhtml"
+ :homepage #P"limajs/homepage.djhtml"
+ :posts #P"limajs/posts.djhtml"
+ :post #P"limajs/post.djhtml"
+ :post-item #P"limajs/post-item.djhtml"
+ :events #P"limajs/events.djhtml"
+ :event #P"limajs/event.djhtml"
+ :event-item #P"limajs/event-item.djtml"
+ :shoutouts #P"limajs/shoutouts.djhtml"
+ :shoutout-item #P"limajs/shoutout.djtml")
