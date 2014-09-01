@@ -5,6 +5,7 @@
   :pathname "src/"
   :serial t
   :depends-on (:closure-template
+               :cl-ppcre
                :closer-mop
                :djula
                :alexandria
@@ -17,19 +18,7 @@
                (:file "site")
                (:file "documents")
                (:file "collections")
-               (:file "router")))
-
-(asdf:defsystem #:mudkip-tests
-  :name "mudkip tests"
-  :serial t
-  :pathname "tests/"
-  :depends-on (:mudkip
-               :stefil)
-  :components ((:file "packages")
-               (:file "mocks")
-               (:file "documents")
-               (:file "content-loaders")
-               (:file "runner")))
-(defmethod asdf:perform ((op asdf:test-op)
-                         (system (eql (asdf:find-system :mudkip))))
-  (asdf/package:symbol-call :mudkip-tests 'runner))
+               (:file "router"))
+  :in-order-to ((asdf:test-op (asdf:load-op :mudkip-tests)))
+  :perform (asdf:test-op (o c)
+                    (asdf/package:symbol-call :mudkip-tests 'runner)))
