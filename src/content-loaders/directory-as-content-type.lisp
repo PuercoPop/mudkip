@@ -18,13 +18,14 @@
      :for directory :in (subdirectories (root-dir loader))
      :do
      (loop
+        :with last-dir-as-symbol := (symbolicate
+                                        (string-upcase
+                                         (car
+                                          (last
+                                           (pathname-directory directory)))))
         :for file :in (directory-files directory)
         :do 
         (add-document (parse-document file 
                                       (find-class 
-                                       (symbolicate
-                                        (string-upcase
-                                         (car
-                                          (last
-                                           (pathname-directory directory)))))))
+                                       last-dir-as-symbol))
                           site))))
