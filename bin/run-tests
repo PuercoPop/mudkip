@@ -1,0 +1,5 @@
+#!/usr/bin/cl -Q -s mudkip -sp mudkip-tests --entry main
+;;;; -*- mode: lisp -*-
+
+(defun main (argv)
+  (runner))
