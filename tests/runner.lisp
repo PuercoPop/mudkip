@@ -1,4 +1,5 @@
 (in-package :mudkip-tests)
 
 (defun runner (&optional interactive)
-  (mudkip-documents:run-package-tests :interactive interactive))
+  (mudkip-documents:run-package-tests :interactive interactive)
+  (content-loaders:run-package-tests :interactive interactive))

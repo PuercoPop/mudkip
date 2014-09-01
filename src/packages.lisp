@@ -19,4 +19,8 @@
    #:id
    #:read-content
    #:parse-document
-   #:post))
+   #:post
+   #:site
+   #:load-content
+   #:directory-as-content-type-loader
+   #:document-db))

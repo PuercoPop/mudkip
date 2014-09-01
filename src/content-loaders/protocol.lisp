@@ -1,4 +1,4 @@
-(in-package :blud)
+(in-package :mudkip)
 
 (defgeneric load-content (loader site)
   (:documentation "Load documents to the site according the strategy of the

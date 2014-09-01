@@ -23,6 +23,11 @@
                  (:file "utils")
                  (:file "post")))
                (:file "collections")
+               (:module "content-loaders"
+                :components
+                ((:file "protocol")
+                 (:file "coleslaw-loader")
+                 (:file "directory-as-content-type")))
                (:file "router"))
   :in-order-to ((asdf:test-op (asdf:load-op :mudkip-tests)))
   :perform (asdf:test-op (o c)

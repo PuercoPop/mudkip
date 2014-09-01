@@ -1,3 +1,3 @@
-(in-package :blud)
+(in-package :mudkip)
 
 ;;;; Follow Coleslaw discovery strategy.

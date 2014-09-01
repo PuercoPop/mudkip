@@ -3,7 +3,7 @@
 (in-package :mudkip-documents)
 
 (defparameter +sample-post+
-    (uiop/pathname:merge-pathnames* #P"demo/sample-post.md"
+    (uiop/pathname:merge-pathnames* #P"demo/dir-site/post/sample-post.md"
                                     +test-files-root+))
 
 (deftest empty-documents-should-have-the-same-id ()
