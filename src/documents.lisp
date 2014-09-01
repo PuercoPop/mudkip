@@ -20,11 +20,21 @@
 
 (defmethod initialize-instance :after ((obj document) &key)
   (setf (slot-value obj 'id)
-        (loop
-           :with sha1 :=  (make-digest :sha1)
-           :initially (update-digest sha1 (string-to-octets "document"))
-           :for slot :in (remove-if (lambda (obj) (eq 'id (slot-definition-name obj))) (class-slots (class-of obj)))
-           :finally (return sha1))))
+        (let*
+            ((sha1 (make-digest :sha1))
+             (slots-as-strings
+              (format nil "document~{~A~}"
+                      (mapcar (lambda (slot)
+                                (slot-value obj
+                                            (slot-definition-name slot)))
+                              (remove-if
+                               (lambda (obj)
+                                 (eq (slot-definition-name obj)
+                                     'id))
+                               (class-slots (class-of obj)))))))
+          (update-digest sha1
+                         (string-to-octets slots-as-strings))
+          (sha1-buffer sha1))))
 
 (defclass post (document)
   ((file :initarg :file :reader file)

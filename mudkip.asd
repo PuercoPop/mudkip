@@ -11,7 +11,8 @@
                :uiop
                :3bmd
                :3bmd-ext-code-blocks
-               :inferior-shell)
+               :inferior-shell
+               :ironclad)
   :components ((:file "packages")
                (:file "site")
                (:file "documents")
@@ -25,6 +26,8 @@
   :depends-on (:mudkip
                :stefil)
   :components ((:file "packages")
+               (:file "mocks")
+               (:file "documents")
                (:file "content-loaders")
                (:file "runner")))
 (defmethod asdf:perform ((op asdf:test-op)

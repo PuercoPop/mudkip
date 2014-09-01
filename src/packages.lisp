@@ -4,7 +4,8 @@
   (:import-from :closer-mop :class-slots
                             :slot-definition-name)
   (:import-from :ironclad :make-digest
-                          :update-digest)
+                          :update-digest
+                          :sha1-buffer)
   (:import-from :flexi-streams :string-to-octets)
   (:import-from :asdf :system-relative-pathname)
   (:import-from :uiop/pathname :merge-pathnames*)

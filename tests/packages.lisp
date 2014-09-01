@@ -1,2 +1,4 @@
 (defpackage :mudkip-tests
-  (:use :cl :stefil))
+  (:use :cl :stefil :mudkip)
+  (:export
+   #:foo-doc))
