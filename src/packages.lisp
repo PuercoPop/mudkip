@@ -1,6 +1,8 @@
 (defpackage #:mudkip
   (:use :cl)
-  (:import-from :alexandria :define-constant)
+  (:import-from :alexandria :define-constant
+                            :make-keyword
+                            :symbolicate)
   (:import-from :closer-mop :class-slots
                             :slot-definition-name)
   (:import-from :ironclad :make-digest
@@ -10,7 +12,11 @@
   (:import-from :asdf :system-relative-pathname)
   (:import-from :uiop/pathname :merge-pathnames*)
   (:import-from :uiop/filesystem :file-exists-p
-                                 :directory-files)
+                                 :directory-files
+                                 :subdirectories)
   (:export
    #:document
-   #:id))
+   #:id
+   #:read-content
+   #:parse-document
+   #:post))

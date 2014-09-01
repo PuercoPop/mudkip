@@ -17,6 +17,11 @@
   :components ((:file "packages")
                (:file "site")
                (:file "documents")
+               (:module "doc-types"
+                :components
+                ((:file "protocol")
+                 (:file "utils")
+                 (:file "post")))
                (:file "collections")
                (:file "router"))
   :in-order-to ((asdf:test-op (asdf:load-op :mudkip-tests)))
