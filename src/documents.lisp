@@ -28,9 +28,11 @@
                                 (slot-value obj
                                             (slot-definition-name slot)))
                               (remove-if
-                               (lambda (obj)
-                                 (eq (slot-definition-name obj)
-                                     'id))
+                               (lambda (slot)
+                                 (or (eq (slot-definition-name slot)
+                                         'id)
+                                     (not (slot-boundp obj
+                                                       (slot-definition-name slot)))))
                                (class-slots (class-of obj)))))))
           (update-digest sha1
                          (string-to-octets slots-as-strings))
