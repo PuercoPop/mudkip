@@ -1,5 +1,6 @@
 (in-package :mudkip-tests)
 
 (defun runner (&optional interactive)
-  (mudkip-documents:run-package-tests :interactive interactive)
-  (content-loaders:run-package-tests :interactive interactive))
+  (fiasco:run-package-tests :interactive interactive :packages :mudkip-documents)
+  (fiasco:run-package-tests :interactive interactive :packages :content-loaders)
+  (run-package-tests :interactive interactive :packages :mudkip-router))

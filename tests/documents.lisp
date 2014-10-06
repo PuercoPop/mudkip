@@ -1,10 +1,11 @@
-(stefil:define-test-package :mudkip-documents
+(fiasco:define-test-package :mudkip-documents
   (:use :cl :mudkip :mudkip-tests))
 (in-package :mudkip-documents)
 
 (defparameter +sample-post+
     (uiop/pathname:merge-pathnames* #P"demo/dir-site/post/sample-post.md"
                                     +test-files-root+))
+(import 'mudkip::slots-required-by-query-pattern)
 
 (deftest empty-documents-should-have-the-same-id ()
   (is (equalp (id (make-instance 'document))
@@ -29,3 +30,17 @@
 
 (deftest parse-post-document ()
   (parse-document +sample-post+ (find-class 'post)))
+
+(deftest test-parse-slots-of-query-pattern ()
+  (is (not (slots-required-by-query-pattern '(document))))
+  (is (member 'author
+              (slots-required-by-query-pattern '(document :author "LispLover"))
+              :test #'string=))
+  (is (member 'author
+              (slots-required-by-query-pattern
+               '(document :title "Hail Lisp" :author "LispLover"))
+              :test #'string=))
+  (is (member 'title
+              (slots-required-by-query-pattern
+               '(document :title "Hail Lisp" :author "LispLover"))
+              :test #'string=)))

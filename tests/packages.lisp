@@ -1,7 +1,8 @@
 (defpackage :mudkip-tests
-  (:use :cl :stefil :mudkip)
+  (:use :cl :fiasco :mudkip)
   (:import-from :alexandria :define-constant)
   (:import-from :asdf :system-relative-pathname)
   (:export
    #:foo-doc
-   #:+test-files-root+))
+   #:+test-files-root+
+   #:+sample-doc-db+))

@@ -1,4 +1,4 @@
-(stefil:define-test-package :content-loaders
+(fiasco:define-test-package :content-loaders
   (:use :cl :mudkip :mudkip-tests))
 
 (in-package :content-loaders)
