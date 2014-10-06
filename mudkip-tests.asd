@@ -5,9 +5,10 @@
   :serial t
   :pathname "tests/"
   :depends-on (:mudkip
-               :stefil)
+               :fiasco)
   :components ((:file "packages")
                (:file "mocks")
                (:file "documents")
                (:file "content-loaders")
+               (:file "router")
                (:file "runner")))

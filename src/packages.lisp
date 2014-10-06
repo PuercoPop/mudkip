@@ -4,7 +4,8 @@
                             :make-keyword
                             :symbolicate)
   (:import-from :closer-mop :class-slots
-                            :slot-definition-name)
+                            :slot-definition-name
+                            :class-direct-subclasses)
   (:import-from :ironclad :make-digest
                           :update-digest
                           :sha1-buffer)
@@ -23,4 +24,9 @@
    #:site
    #:load-content
    #:directory-as-content-type-loader
-   #:document-db))
+   #:document-db
+   #:add-document
+   #:query))
+
+(defpackage #:mudkip-user
+  (:use :cl :mudkip))

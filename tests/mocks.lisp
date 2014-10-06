@@ -4,5 +4,26 @@
     (system-relative-pathname :mudkip-tests "tests/") :test #'equal)
 
 (defclass foo-doc (document)
-  ((foo :initarg :foo :reader foo))
+  ((foo :initarg :foo :reader foo)
+   (title :initarg :title :reader tittle)
+   (author :initarg :author :reader author))
   (:documentation "A run of the mill document type."))
+
+
+
+(defparameter +sample-doc-db+
+  (let
+      ((db (make-hash-table)))
+    (flet ((add-document (document site)
+             (setf (gethash (id document)  site)
+                   document)))
+      (add-document (make-instance 'foo-doc
+                                   :title "I Love Lisp" :author "LispLover")
+                    db)
+      (add-document (make-instance 'foo-doc
+                                   :title "Lisp Love Song" :author "LispLover")
+                    db)
+      (add-document (make-instance 'foo-doc
+                                   :title "I hate Lisp" :author "LispHater")
+                    db)))
+  "A document db to test against.")
