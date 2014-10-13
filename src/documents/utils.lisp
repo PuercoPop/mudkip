@@ -1,14 +1,21 @@
-(defpackage mudkip/tree
+(defpackage #:mudkip/documents/tree
   (:use :cl)
   (:import-from :closer-mop #:classp
                             #:class-direct-subclasses)
   (:export
-   #:walk-collect))
-(in-package :mudkip/tree)
+   #:walk-collect
+   #:build-inheritance-tree))
+(in-package :mudkip/documents/tree)
 
 (defclass node ()
   ((value :initarg :value :initform :leaf :accessor value)
    (children :initarg children :initform nil :accessor children)))
+
+(defgeneric nodep (obj) (:documentation "Is the object an instance of node?"))
+
+(defmethod nodep ((obj t)) nil)
+
+(defmethod nodep ((obj node)) t)
 
 (defmethod print-object ((obj node) stream)
   (print-unreadable-object (obj stream :type t)
@@ -33,32 +40,26 @@
                         n)
                       (children node)))))))
 
-(defun spam-or-ham (xs test-fn)
-  "Return two values the list of elements that satisfy that test function and the list of elements that don't satisfy it.
- (xs-pass, xs-fail)"
-  (let ((pass-xs)
-        (fail-xs))
-    (loop
-      :for elem :in xs
-      :do
-      (if (funcall test-fn elem)
-          (setf pass-xs (cons elem pass-xs))
-          (setf fail-xs (cons elem fail-xs))))
-    (values pass-xs fail-xs)))
-
-(defun %walk-collect (node predicate results)
-  (if (funcall predicate (value node))
-      (setf results (cons (value node) results))
-      (multiple-value-bind (ham spam)
-          (spam-or-ham (children node) predicate)
-        (dolist (v ham)
-          (setf results (cons (value v) results)))
-        (dolist (v spam)
-          (%walk-collect v predicate results)))))
+(defun %walk-collect (node predicate queue results)
+  (cond ((and (null node) (null queue)) results)
+        ((and (null queue) (listp node))
+         (%walk-collect (cdr node)
+                        predicate
+                        (mapcar #'value (children (car node)))
+                        results))
+        ((and (null queue) (atom node))
+         (%walk-collect (children node)
+                        predicate
+                        (mapcar #'value (children node))
+                        results))
+        (t (%walk-collect node
+                          predicate
+                          (cdr queue)  
+                          (if (funcall predicate (car queue))
+                              (cons (car queue) results)
+                              results)))))
 
 (defun walk-collect (tree predicate)
   "Walk the tree collecting the highest node for which the predicate returns
-  true."
-  (let ((results nil))
-    (%walk-collect tree predicate results)
-    results))
+  true. Breadth-first."
+  (%walk-collect tree predicate nil nil))
