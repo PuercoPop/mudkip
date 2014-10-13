@@ -11,12 +11,6 @@
   ((value :initarg :value :initform :leaf :accessor value)
    (children :initarg children :initform nil :accessor children)))
 
-(defgeneric nodep (obj) (:documentation "Is the object an instance of node?"))
-
-(defmethod nodep ((obj t)) nil)
-
-(defmethod nodep ((obj node)) t)
-
 (defmethod print-object ((obj node) stream)
   (print-unreadable-object (obj stream :type t)
     (format stream "~A" (value obj))))
