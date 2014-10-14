@@ -1,4 +1,12 @@
-(in-package :mudkip)
+(defpackage #:mudkip/core/router
+  (:use :cl)
+  (:export
+   #:retrieve-document
+   #:list-all-urls
+   #:add-route
+   #:router
+   #:routes))
+(in-package :mudkip/core/router)
 
 (defgeneric retrieve-document (router url)
   (:documentation "Retrieve the document to render for the current url."))

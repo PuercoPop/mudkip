@@ -1,7 +1,6 @@
 (defpackage #:mudkip/content-loaders
-  (:use :cl)
+  (:use :cl :mudkip/core/content-loaders)
   (:export
-   #:load-content
    #:directory-as-content-type-loader
    #:root-dir
    #:mappings))

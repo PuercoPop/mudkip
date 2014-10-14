@@ -1,4 +1,6 @@
-(in-package :mudkip)
+(defpackage #:mudkip/core/doc-types
+  (:use :cl))
+(in-package :mudkip/core/doc-types)
 
 (defgeneric parse-document (file doc-type)
   (:documentation "Read the contents of file an use them to initialize an

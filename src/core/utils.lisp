@@ -1,11 +1,11 @@
-(defpackage #:mudkip/documents/tree
+(defpackage #:mudkip/core/utils
   (:use :cl)
   (:import-from :closer-mop #:classp
                             #:class-direct-subclasses)
   (:export
    #:walk-collect
    #:build-inheritance-tree))
-(in-package :mudkip/documents/tree)
+(in-package :mudkip/core/utils)
 
 (defclass node ()
   ((value :initarg :value :initform :leaf :accessor value)

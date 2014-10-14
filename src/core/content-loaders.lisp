@@ -1,4 +1,9 @@
-(in-package :mudkip/content-loaders)
+(defpackage #:mudkip/core/content-loaders
+  (:use :cl)
+  (:export
+   #:load-content))
+
+(in-package :mudkip/core/content-loaders)
 
 (defgeneric load-content (loader site)
   (:documentation "Load documents to the site according the strategy of the

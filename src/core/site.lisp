@@ -1,20 +1,20 @@
-(defpackage #:mudkip/site
+(defpackage #:mudkip/core/site
   (:use :cl)
-  (:import-from :mudkip/documents #:id)
-  (:import-from :mudkip/content-loaders #:load-content)
+  (:import-from :mudkip/core/documents #:id)
+  (:import-from :mudkip/core/content-loaders #:load-content)
   (:export
    #:site
    #:document-db
-   #:routes
+   #:router
    #:content-loaders
    #:load-documents
    #:add-document))
-(in-package :mudkip/site)
+(in-package :mudkip/core/site)
 
 (defclass site ()
   ((db :initarg :db :initform (make-hash-table) :accessor document-db
        :documentation "In memory database where documents are kept.")
-   (routes :initarg :routes :reader routes :type router
+   (routes :initarg :routes :reader router :type router
            :documentation "A mapping of relative urls to documents.")
    (content-loaders :initarg :content-loaders :accessor content-loaders
                     :documentation "Loaders to populate the document db with.")))
