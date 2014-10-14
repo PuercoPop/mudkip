@@ -11,3 +11,5 @@
       (find-class 'stream))
   (ok (walk-collect tree (lambda (x) (member (find-class 'stream)
                                              (cdr (class-precedence-list x)))))))
+
+(finalize)

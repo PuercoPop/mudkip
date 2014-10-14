@@ -5,7 +5,7 @@
   :serial t
   :pathname "tests/"
   :depends-on (:mudkip
-               :fiasco)
+               :prove)
   :components ((:file "packages")
                (:file "mocks")
                (:file "documents")

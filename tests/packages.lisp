@@ -1,5 +1,5 @@
 (defpackage :mudkip-tests
-  (:use :cl :fiasco :mudkip)
+  (:use :cl :mudkip)
   (:import-from :alexandria :define-constant)
   (:import-from :asdf :system-relative-pathname)
   (:export

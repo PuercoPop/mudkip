@@ -1,46 +1,29 @@
-(fiasco:define-test-package :mudkip-documents
-  (:use :cl :mudkip :mudkip-tests))
-(in-package :mudkip-documents)
+(defpackage :mudkip/documents-test
+  (:use :cl :prove :mudkip-test-mocks))
+(in-package :mudkip/documents-test)
 
 (defparameter +sample-post+
     (uiop/pathname:merge-pathnames* #P"demo/dir-site/post/sample-post.md"
                                     +test-files-root+))
-(import 'mudkip::slots-required-by-query-pattern)
 
-(deftest empty-documents-should-have-the-same-id ()
-  (is (equalp (id (make-instance 'document))
-              (id (make-instance 'document)))))
+(ok (equalp (id (make-instance 'document))
+            (id (make-instance 'document)))
+    "Empty documents should have the same id.")
 
-(deftest same-content-should-have-the-same-id ()
-  (is (equalp (id (make-instance 'foo-doc :foo 2))
-              (id (make-instance 'foo-doc :foo 2)))))
+(ok (equalp (id (make-instance 'foo-doc :foo 2))
+            (id (make-instance 'foo-doc :foo 2)))
+    "Documents with the same content should have the same id.")
 
-(deftest different-content-should-have-different-ids ()
-  (is (not (equalp (id (make-instance 'foo-doc :foo 2))
-                   (id (make-instance 'foo-doc :foo 3))))))
+(isnt (equalp (id (make-instance 'foo-doc :foo 2))
+             (id (make-instance 'foo-doc :foo 3)))
+    "Documents with different content should have different ids.")
 
 ;; Document parsing
+(diag "read-content sanity check.")
+(let ((content (read-content
+                +sample-post+
+                "-----")))
+  (ok (string= (getf content :title) "Sample Post"))
+  (ok (string= (getf content :date) "2014-14-31")))
 
-(deftest read-content-sanity-check ()
-  (let ((content (read-content
-                  +sample-post+
-                  "-----")))
-    (is (string= (getf content :title) "Sample Post"))
-    (is (string= (getf content :date) "2014-14-31"))))
-
-(deftest parse-post-document ()
-  (parse-document +sample-post+ (find-class 'post)))
-
-(deftest test-parse-slots-of-query-pattern ()
-  (is (not (slots-required-by-query-pattern '(document))))
-  (is (member 'author
-              (slots-required-by-query-pattern '(document :author "LispLover"))
-              :test #'string=))
-  (is (member 'author
-              (slots-required-by-query-pattern
-               '(document :title "Hail Lisp" :author "LispLover"))
-              :test #'string=))
-  (is (member 'title
-              (slots-required-by-query-pattern
-               '(document :title "Hail Lisp" :author "LispLover"))
-              :test #'string=)))
+(ok (parse-document +sample-post+ (find-class 'post)) "parse-post-document sanity check.")

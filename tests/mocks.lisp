@@ -1,4 +1,15 @@
-(in-package :mudkip-tests)
+(defpackage #:mudkip-test-mocks
+  (:use :cl :mudkip/site :mudkip/documents)
+  (:import-from :alexandria :define-constant)
+  (:import-from :asdf :system-relative-pathname)
+  (:export
+   #:+test-files-root+
+   #:foo-doc
+   #:foo
+   #:tittle
+   #:author
+   #:+sample-doc-db+))
+(in-package :mudkip-test-mocks)
 
 (define-constant +test-files-root+
     (system-relative-pathname :mudkip-tests "tests/") :test #'equal)
@@ -8,8 +19,6 @@
    (title :initarg :title :reader tittle)
    (author :initarg :author :reader author))
   (:documentation "A run of the mill document type."))
-
-
 
 (defparameter +sample-doc-db+
   (let

@@ -1,18 +1,20 @@
+* Roadmap
+** Version 0.1 [0/7]
+   - [ ] Content Loaders [0/4]
+     - [ ] Coleslaw Content Loader
+     - [ ] Directory as Content Type
+     - [ ] On the fly Twitter Timeline Search
+     - [ ] Lisp Packages information?
+   - [ ] Router
+   - [ ] Templates [0/2]
+     - [ ] Djula Backend
+     - [ ] closure backends
+   - [ ] Wookie Preview Server
+   - [ ] Deploy to gh pages
+   - [ ] Travis Build Bot
+   - [ ] Injections [0/2]
+     - [ ] Global Injections
+     - [ ] Per Document Injections
 
-
-* Version 0.1 [0/7]
-  - [ ] Content Loaders [0/4]
-    - [ ] Coleslaw Content Loader
-    - [ ] Directory as Content Type
-    - [ ] On the fly Twitter Timeline Search
-    - [ ] Lisp Packages information?
-  - [ ] Router
-  - [ ] Templates [0/2]
-    - [ ] Djula Backend
-    - [ ] closure backends
-  - [ ] Wookie Preview Server
-  - [ ] Deploy to gh pages
-  - [ ] Travis Build Bot
-  - [ ] Injections [0/2]
-    - [ ] Global Injections
-    - [ ] Per Document Injections
+* Design Doubts
+  - [ ] parse document specializing on keywords instead of class instance

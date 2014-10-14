@@ -1,4 +1,17 @@
-(in-package :mudkip)
+(defpackage #:mudkip/documents
+  (:use :cl)
+  (:import-from :closer-mop :slot-definition-name
+                            :class-slots)
+  (:import-from :ironclad :make-digest
+                          :update-digest
+                          :sha1-buffer)
+  (:import-from :flexi-streams :string-to-octets)
+  (:export
+   #:discover
+   #:document
+   #:id
+   #:render-text))
+(in-package :mudkip/documents)
 
 (defgeneric discover (doc-type)
   (:documentation "Scour the files in the search path and load the matching document type."))
@@ -56,7 +69,7 @@
       (3bmd:parse-string-and-print-to-stream text str))))
 
 
-(defun read-content (file)
+#+nil(defun read-content (file)
   "Returns a plist of metadata from FILE with :text holding the content as a string."
   )
 

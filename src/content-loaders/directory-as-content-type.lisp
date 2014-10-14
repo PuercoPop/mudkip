@@ -1,4 +1,4 @@
-(in-package :mudkip)
+(in-package :mudkip/content-loaders)
 
 ;;;; Take the directory the file is in as the content-type discriminant. Look
 ;;;; the directory in an alist to fetch the concrete content type.

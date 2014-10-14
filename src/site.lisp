@@ -1,4 +1,15 @@
-(in-package :mudkip)
+(defpackage #:mudkip/site
+  (:use :cl)
+  (:import-from :mudkip/documents #:id)
+  (:import-from :mudkip/content-loaders #:load-content)
+  (:export
+   #:site
+   #:document-db
+   #:routes
+   #:content-loaders
+   #:load-documents
+   #:add-document))
+(in-package :mudkip/site)
 
 (defclass site ()
   ((db :initarg :db :initform (make-hash-table) :accessor document-db
@@ -12,10 +23,10 @@
 (defun load-documents (site)
   "Iterate through all the loaders and load all the content."
   (dolist (loader (content-loaders site))
-    (load-content loader site)))
+    (load-content loqader site)))
 
 (defun add-document (document site)
   "Add the document to the site's database."
-  ;; TODO: Evaluate if I should change the SHA1 octect to base64.
+  ;; TODO: Evaluate if I should change the SHA1 octect to a base64 string.
   (setf (gethash (id document) (document-db site))
         document))
