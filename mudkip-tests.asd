@@ -6,9 +6,9 @@
   :pathname "tests/"
   :depends-on (:mudkip
                :prove)
+  :defsystem-depends-on (:prove-asdf)
   :components ((:file "packages")
                (:file "mocks")
-               (:file "documents")
-               (:file "content-loaders")
-               (:file "router")
-               (:file "runner")))
+               (:test-file "documents")
+               (:test-file "content-loaders")
+               (:test-file "router")))
