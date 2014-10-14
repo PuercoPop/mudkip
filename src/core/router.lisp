@@ -4,8 +4,7 @@
    #:retrieve-document
    #:list-all-urls
    #:add-route
-   #:router
-   #:routes))
+   #:router))
 (in-package :mudkip/core/router)
 
 (defgeneric retrieve-document (router url)

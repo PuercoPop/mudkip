@@ -5,7 +5,7 @@
   (:export
    #:site
    #:document-db
-   #:router
+   #:routes
    #:content-loaders
    #:load-documents
    #:add-document))
@@ -14,7 +14,7 @@
 (defclass site ()
   ((db :initarg :db :initform (make-hash-table) :accessor document-db
        :documentation "In memory database where documents are kept.")
-   (routes :initarg :routes :reader router :type router
+   (routes :initarg :routes :reader routes :type router
            :documentation "A mapping of relative urls to documents.")
    (content-loaders :initarg :content-loaders :accessor content-loaders
                     :documentation "Loaders to populate the document db with.")))
