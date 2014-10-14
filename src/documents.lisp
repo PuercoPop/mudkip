@@ -1,5 +1,6 @@
-(defpackage #:mudkip/documents
+(uiop:define-package #:mudkip/documents
   (:use :cl)
+  (:use-reexport :mudkip/core/documents)
   (:import-from :closer-mop :slot-definition-name
                             :class-slots)
   (:import-from :ironclad :make-digest

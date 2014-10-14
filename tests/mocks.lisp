@@ -1,5 +1,5 @@
 (defpackage #:mudkip-test-mocks
-  (:use :cl :mudkip/site :mudkip/documents)
+  (:use :cl :mudkip/core)
   (:import-from :alexandria :define-constant)
   (:import-from :asdf :system-relative-pathname)
   (:export

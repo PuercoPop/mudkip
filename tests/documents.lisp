@@ -1,5 +1,5 @@
 (defpackage :mudkip/documents-test
-  (:use :cl :prove :mudkip-test-mocks))
+  (:use :cl :prove :mudkip-test-mocks :mudkip/documents))
 (in-package :mudkip/documents-test)
 
 (defparameter +sample-post+
@@ -23,7 +23,8 @@
 (let ((content (read-content
                 +sample-post+
                 "-----")))
-  (ok (string= (getf content :title) "Sample Post"))
-  (ok (string= (getf content :date) "2014-14-31")))
+  (is (getf content :title) "Sample Post")
+  (is (getf content :date) "2014-14-31")
+  (ok content))
 
 (ok (parse-document +sample-post+ (find-class 'post)) "parse-post-document sanity check.")
