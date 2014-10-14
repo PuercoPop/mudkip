@@ -7,7 +7,6 @@
                           :update-digest
                           :sha1-buffer)
   (:export
-   #:discover
    #:document
    #:id
    #:render-text
@@ -15,8 +14,6 @@
    #:parse-hearder))
 (in-package :mudkip/core/documents)
 
-(defgeneric discover (doc-type)
-  (:documentation "Scour the files in the search path and load the matching document type."))
 
 (defclass document ()
   ((id :reader id :documentation "A SHA-1 of every slot except the id slot preprended with document."))
