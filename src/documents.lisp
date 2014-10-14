@@ -20,6 +20,6 @@
 
 
 (defmethod render-text (text (format (eql :md)))
-  (let ((3md-code-blocks:*code-blocks* t))
+  (let ((3bmd-code-blocks:*code-blocks* t))
     (with-output-to-string (str)
       (3bmd:parse-string-and-print-to-stream text str))))
