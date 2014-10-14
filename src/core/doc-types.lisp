@@ -1,5 +1,7 @@
 (defpackage #:mudkip/core/doc-types
-  (:use :cl))
+  (:use :cl)
+  (:export
+   #:parse-document))
 (in-package :mudkip/core/doc-types)
 
 (defgeneric parse-document (file doc-type)
