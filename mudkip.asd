@@ -5,7 +5,8 @@
   :description "Mudkip's core abstractions, generic implementation's and API."
   :version "0.1"
   :pathname "src/"
-  :depends-on (:closer-mop
+  :depends-on (:alexandria
+               :closer-mop
                :flexi-streams
                :ironclad)
   :components ((:module "core"

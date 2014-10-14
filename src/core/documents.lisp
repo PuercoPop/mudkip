@@ -1,5 +1,6 @@
 (defpackage #:mudkip/core/documents
   (:use :cl)
+  (:import-from :alexandria :make-keyword)
   (:import-from :closer-mop :class-slots
                             :slot-definition-name)
   (:import-from :flexi-streams :string-to-octets)
@@ -39,11 +40,38 @@
                          (string-to-octets slots-as-strings))
           (sha1-buffer sha1))))
 
-(defgeneric render-text (text)
+(defgeneric render-text (text format)
   (:documentation "Render TEXT of the given FORMAT to HTML for display."))
 
-(defun read-content (file)
-  "Returns a plist of metadata from FILE with :text holding the content as a string."
-  )
+(defun read-content (file &optional (header "-----") (file-encoding '(:utf-8)))
+  "Returns a plist of metadata from FILE with :text holding the content as a
+  string."
+  (with-open-file (in file :external-format file-encoding)
+    (let ((results nil))
+      (unless (string= header
+                       (read-line in nil 'eof))
+        (error "No header found in ~A" file))
+      (setf results (%parse-header in header results))
+      (setf (getf results :text) (loop
+                                   :for line := (read-line in nil 'eof)
+                                   :until (eq line 'eof)
+                                   :collect line))
+      results)))
 
-(defun parse-hearder ())
+(defun %parse-header (input header results)
+  (loop
+    :for line := (read-line input nil 'eof)
+    :until (string= line header)
+    :do
+       (multiple-value-bind (key value) (%parse-header-line line)
+
+         (unless (string= "" value)
+           (setf (getf results key) value))))
+  results)
+
+(defun %parse-header-line (line)
+  (let* ((separator-pos (position #\: line))
+         (key (make-keyword (string-upcase (subseq line 0 separator-pos))))
+         (value (string-trim '(#\Space #\Tab)
+                             (subseq line (1+ separator-pos) ))))
+      (values key value)))
