@@ -10,5 +10,6 @@
   :components ((:file "packages")
                (:file "mocks")
                (:test-file "documents")
+               (:test-file "doc-types")
                (:test-file "content-loaders")
                (:test-file "router")))

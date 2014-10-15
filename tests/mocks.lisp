@@ -8,7 +8,8 @@
    #:foo
    #:tittle
    #:author
-   #:+sample-doc-db+))
+   #:+sample-doc-db+
+   #:+sample-post+))
 (in-package :mudkip-test-mocks)
 
 (define-constant +test-files-root+
@@ -36,3 +37,7 @@
                                    :title "I hate Lisp" :author "LispHater")
                     db)))
   "A document db to test against.")
+
+(defparameter +sample-post+
+    (uiop/pathname:merge-pathnames* #P"demo/dir-site/post/sample-post.md"
+                                    +test-files-root+))

@@ -1,4 +1,8 @@
-(in-package :mudkip)
+(defpackage :mudkip/doc-types/post
+  (:use :cl :mudkip/core)
+  (:export
+   #:post))
+(in-package :mudkip/doc-types/post)
 
 (defclass post (document)
   ((title :initarg :title :reader title)

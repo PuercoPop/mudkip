@@ -2,10 +2,6 @@
   (:use :cl :prove :mudkip-test-mocks :mudkip/documents))
 (in-package :mudkip/documents-test)
 
-(defparameter +sample-post+
-    (uiop/pathname:merge-pathnames* #P"demo/dir-site/post/sample-post.md"
-                                    +test-files-root+))
-
 (ok (equalp (id (make-instance 'document))
             (id (make-instance 'document)))
     "Empty documents should have the same id.")
@@ -26,5 +22,3 @@
   (is (getf content :title) "Sample Post")
   (is (getf content :date) "2014-14-31")
   (ok content))
-
-(ok (parse-document +sample-post+ (find-class 'post)) "parse-post-document sanity check.")
