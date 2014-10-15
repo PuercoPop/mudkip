@@ -36,8 +36,8 @@
                (:file "documents")
                (:module "doc-types"
                 :components
-                ((:file "utils")
-                 (:file "post")))
+                ((:file "post")
+                 (:file "package")))
                (:file "collections")
                (:module "content-loaders"
                 :components
@@ -46,4 +46,4 @@
                  (:file "directory-as-content-type"))))
   :in-order-to ((asdf:test-op (asdf:load-op :mudkip-tests)))
   :perform (asdf:test-op (o c)
-                    (asdf/package:symbol-call :prove 'run)))
+                    (asdf/package:symbol-call :prove 'run :mudkip)))
