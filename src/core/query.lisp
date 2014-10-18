@@ -52,18 +52,5 @@
        :for doc :being :the hash-values :in ,db
        :do
           (match doc
-            (,pattern (setf ,matches (adjoin doc ,matches))))
+            (,expanded-pattern (setf ,matches (adjoin doc ,matches))))
        :finally (return ,matches))))
-
-
-;; (query (document :author "LispLover") (make-hash-table))
-
-;; (defclass foo-doc (post) ())
-
-;; (loop
-;;   :with matches = nil
-;;   :for doc :being :the hash-values :in *doc-db*
-;;   :do
-;;   (match doc
-;;     ((foo-doc :author "LispHater")  (setf matches (adjoin doc matches))))
-;;   :finally (return matches))

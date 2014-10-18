@@ -35,4 +35,5 @@
 (is (car (expand-pattern '(document :title "Hai"))) 'or)
 (ok (every #'listp (cdr (expand-pattern '(document :title "Hai")))))
 
-
+(ok (query (document :author "LispLover") +sample-doc-db+))
+(finalize)
