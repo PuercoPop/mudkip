@@ -3,7 +3,11 @@
   (:import-from :mudkip/core/utils #:build-inheritance-tree
                                    #:walk-collect)
   (:import-from :closer-mop #:slot-definition-name
-                            #:class-slots))
+                            #:class-slots
+                            #:ensure-finalized)
+  (:import-from :optima #:match)
+  (:export
+   #:query))
 (in-package :mudkip/core/query)
 
 (defun slots-required-by-query-pattern (query)
@@ -15,10 +19,10 @@
 
 (defun class-has-slots-p (class slots)
   "Return only if class has all the slots. slots is a list of keywords."
-  (and (mapcar (lambda (slot)
-                 (member (slot-definition-name slot) slots :test #'string=))
-               (class-slots class))))
-
+  (and (remove-if-not
+        (lambda (slot)
+          (member (slot-definition-name slot) slots :test #'string=))
+        (class-slots (ensure-finalized class)))))
 
 (defun expand-pattern (pattern)
   "Given a query pattern it returns a optima pattern that corresponds."
