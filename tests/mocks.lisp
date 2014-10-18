@@ -35,7 +35,8 @@
                     db)
       (add-document (make-instance 'foo-doc
                                    :title "I hate Lisp" :author "LispHater")
-                    db)))
+                    db))
+    db)
   "A document db to test against.")
 
 (defparameter +sample-post+
