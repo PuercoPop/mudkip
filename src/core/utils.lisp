@@ -42,10 +42,12 @@
                         (mapcar #'value (children (car node)))
                         results))
         ((and (null queue) (atom node))
-         (%walk-collect (children node)
-                        predicate
-                        (mapcar #'value (children node))
-                        results))
+         (if (funcall predicate (value node))
+             (cons (value node) results)
+             (%walk-collect (children node)
+                            predicate
+                            (mapcar #'value (children node))
+                            results)))
         (t (%walk-collect node
                           predicate
                           (cdr queue)  
