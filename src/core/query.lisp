@@ -26,16 +26,21 @@
 
 (defun expand-pattern (pattern)
   "Given a query pattern it returns a optima pattern that corresponds."
-  (let* ((class (find-class (car pattern)))
-         (slots-required (slots-required-by-query-pattern pattern))
-         (class-tree (build-inheritance-tree class))
-         (classes (walk-collect class-tree (lambda (x) (class-has-slots-p x slots-required)))))
-
-    (cond ((null classes) 
-           (error (format nil "No class with such slot combination: ~A" pattern)))
-          ((eql 1 (length classes)) (list (car classes) (cdr pattern)))
-          (t (list `(or ,(loop :for c :in classes
-                               :collect (list (car classes) (cdr pattern)))))))))
+  (let ((class (find-class (car pattern)))
+        (slots-required (slots-required-by-query-pattern pattern)))
+    (if  (null slots-required)
+         (list (class-name class))
+         (let*
+             ((class-tree (build-inheritance-tree class))
+              (classes (walk-collect
+                        class-tree
+                        (lambda (x) (class-has-slots-p x slots-required)))))
+           (cond
+             ((null classes)
+              (error "No class with such slot combination: ~A" pattern))
+             ((eql 1 (length classes)) (apply #'list (class-name (car classes)) (cdr pattern)))
+             (t `(or ,@(loop :for c :in classes
+                             :collect (list (class-name c) (cdr pattern))))))))))
 
 ;; FIXME: The class in the pattern may include slots that are only defined by subclasses, optima doesn't take care of. We should check that the base class has all slots and if not iterate through all the the subclasses and generate a match pattern if they conform to the slots.
 (defmacro query (pattern db)
