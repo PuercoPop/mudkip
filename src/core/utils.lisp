@@ -56,6 +56,6 @@
                               results)))))
 
 (defun walk-collect (tree predicate)
-  "Walk the tree collecting the highest node for which the predicate returns
+  "Walk the tree collecting the nodes for which the predicate returns
   true. Breadth-first."
   (%walk-collect tree predicate nil nil))

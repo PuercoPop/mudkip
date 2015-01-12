@@ -42,7 +42,6 @@
              (t `(or ,@(loop :for c :in classes
                              :collect (list (class-name c) (cdr pattern))))))))))
 
-;; FIXME: The class in the pattern may include slots that are only defined by subclasses, optima doesn't take care of. We should check that the base class has all slots and if not iterate through all the the subclasses and generate a match pattern if they conform to the slots.
 (defmacro query (pattern db)
   "Collect all documents in db that match the pattern."
   (let ((matches (gensym))
