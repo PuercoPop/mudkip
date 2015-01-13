@@ -8,7 +8,8 @@
   :depends-on (:alexandria
                :closer-mop
                :flexi-streams
-               :ironclad)
+               :ironclad
+               :optima)
   :components ((:module "core"
                 :components ((:file "documents")
                              (:file "doc-types")

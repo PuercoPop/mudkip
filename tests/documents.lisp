@@ -14,6 +14,13 @@
              (id (make-instance 'foo-doc :foo 3)))
     "Documents with different content should have different ids.")
 
+(ok (let* ((foo (make-instance 'foo-doc :foo 3))
+             (old-id (id foo)))
+        (setf (slot-value foo 'foo) 5)
+
+      (not (equalp old-id (id foo))))
+      "Documents should update the id when a slot changes.")
+
 ;; Document parsing
 (diag "read-content sanity check.")
 (let ((content (read-content
