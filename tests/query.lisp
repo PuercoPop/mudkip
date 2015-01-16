@@ -2,6 +2,7 @@
   (:use :cl :prove :mudkip-test-mocks :mudkip/core))
 (in-package :mudkip/query-test)
 
+(plan 11)
 (diag "test-parse-slots-of-query-pattern")
 
 (let ((internal-symbols '(slots-required-by-query-pattern
@@ -35,5 +36,6 @@
 (is (car (expand-pattern '(document :title "Hai"))) 'or)
 (ok (every #'listp (cdr (expand-pattern '(document :title "Hai")))))
 
-(ok (query (document :author "LispLover") +sample-doc-db+))
+(ok (query '(document :author "LispLover") +sample-doc-db+))
+
 (finalize)

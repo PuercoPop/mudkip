@@ -8,6 +8,7 @@
   (:import-from :optima #:match)
   (:export
    #:query))
+
 (in-package :mudkip/core/query)
 
 (defun slots-required-by-query-pattern (query)
@@ -42,14 +43,13 @@
              (t `(or ,@(loop :for c :in classes
                              :collect (list (class-name c) (cdr pattern))))))))))
 
-(defmacro query (pattern db)
+(defun query (pattern db)
   "Collect all documents in db that match the pattern."
-  (let ((matches (gensym))
-        (expanded-pattern (expand-pattern pattern)))
-    `(loop
-       :with ,matches := nil
-       :for doc :being :the hash-values :in ,db
-       :do
-          (match doc
-            (,expanded-pattern (setf ,matches (adjoin doc ,matches))))
-       :finally (return ,matches))))
+  (let ((expanded-pattern (expand-pattern pattern)))
+    (loop
+      :with matches := nil
+      :for doc being the hash-values in db
+      :do
+         (match doc
+           (expanded-pattern (setf matches (adjoin doc matches))))
+      :finally (return matches))))
