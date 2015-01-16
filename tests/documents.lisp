@@ -2,6 +2,8 @@
   (:use :cl :prove :mudkip-test-mocks :mudkip/documents))
 (in-package :mudkip/documents-test)
 
+(plan 7)
+
 (ok (equalp (id (make-instance 'document))
             (id (make-instance 'document)))
     "Empty documents should have the same id.")
@@ -29,3 +31,5 @@
   (is (getf content :title) "Sample Post")
   (is (getf content :date) "2014-14-31")
   (ok content))
+
+(finalize)

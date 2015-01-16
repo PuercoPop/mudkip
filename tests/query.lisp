@@ -1,5 +1,5 @@
 (defpackage #:mudkip/query-test
-  (:use :cl :prove :mudkip-test-mocks :mudkip/core))
+  (:use :cl :prove :mudkip/core :mudkip-test-mocks))
 (in-package :mudkip/query-test)
 
 (plan 11)
@@ -12,7 +12,7 @@
   (diag
    (format nil "Importing some internal symbols from ~A " package-to-import))
   (dolist (s internal-symbols)
-    (import (find-symbol (symbol-name s) package-to-import))))
+    (shadowing-import (find-symbol (symbol-name s) package-to-import))))
 
 
 (ok (not (slots-required-by-query-pattern '(document))))
