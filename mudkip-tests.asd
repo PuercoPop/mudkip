@@ -12,4 +12,5 @@
                (:test-file "documents")
                (:test-file "doc-types")
                (:test-file "content-loaders")
+               (:test-file "query")
                (:test-file "router")))
