@@ -7,7 +7,7 @@
 
 (in-package #:mudkip/core/router)
 
-(defgeneric retrieve-document (router url)
+(defgeneric retrieve-document (router url db)
   (:documentation "Retrieve the document to render for the current url."))
 
 (defgeneric list-all-urls (router)

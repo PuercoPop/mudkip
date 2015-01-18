@@ -1,4 +1,4 @@
-(defpackage :mudkip/core/query
+(defpackage #:mudkip/core/query
   (:use :cl)
   (:import-from :mudkip/core/utils #:build-inheritance-tree
                                    #:walk-collect)
@@ -9,7 +9,7 @@
   (:export
    #:query))
 
-(in-package :mudkip/core/query)
+(in-package #:mudkip/core/query)
 
 (defun slots-required-by-query-pattern (query)
   "Return a list of the slots the object is assumed to have."
