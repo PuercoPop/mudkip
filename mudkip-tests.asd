@@ -13,4 +13,5 @@
                (:test-file "doc-types")
                (:test-file "content-loaders")
                (:test-file "query")
+               (:test-file "query-constructor")
                (:test-file "router")))

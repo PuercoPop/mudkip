@@ -35,6 +35,7 @@
                :uiop)
   :components ((:file "packages")
                (:file "documents")
+               (:file "query-constructor")
                (:module "doc-types"
                 :components
                 ((:file "post")
