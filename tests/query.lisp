@@ -36,6 +36,7 @@
 (is (car (expand-pattern '(document :title "Hai"))) 'or)
 (ok (every #'listp (cdr (expand-pattern '(document :title "Hai")))))
 
-(ok (query (document :author "LispLover") +sample-doc-db+))
+(is (length (query (document :author "LispLover") +sample-doc-db+))
+    2)
 
 (finalize)
