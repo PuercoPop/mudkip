@@ -11,7 +11,7 @@
            document query pattern.")))
 
 ;; /posts/<title:str>/
-(defmethod retrieve-document ((router router) (url string))
+(defmethod find-document ((router router) (url string) db)
   (loop :for key :being :the hash-keys :of (routes router)
         :for value :being :the hash-values :of (routes router)
         :when (scran key url)
