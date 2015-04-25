@@ -30,6 +30,7 @@
                :closure-template
                :cl-ppcre
                :djula
+               ;; :djurlex
                :inferior-shell
                :mudkip/core
                :uiop)

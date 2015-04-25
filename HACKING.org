@@ -18,3 +18,9 @@
 
 * Design Doubts
   - [ ] parse document specializing on keywords instead of class instance
+
+* TODO Write djurlex
+  Similar to puri-template by the the variable has a 'type' that determines if
+  the captured value is of the type we want and how to lispify it. For example,
+  "/user/<id:integer>" could is verified with #'integerp and lispfied with
+  #'parser-integer'
