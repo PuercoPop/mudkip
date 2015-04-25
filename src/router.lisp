@@ -12,14 +12,6 @@
 
 (setf ppcre:*allow-named-registers* t)
 
-(define-condition route-not-found ()
-  ((url :initarg :url :reader url))
-  (:report (lambda (c s)
-             (format s "~A did not any url-template." (url c))))
-  (:documentation "Signals that the url didn't match any url template in the
-  router."))
-
-
 (defclass router ()
   ((routes :initarg :db :initform (make-hash-table) :reader routes
            :documentation "A hash table mapping a regexp with a
@@ -42,8 +34,6 @@
   (multiple-value-bind (scanner register-names) (create-scanner url-selector)
     (let ((qc (make-instance 'query-constructor :names register-names)))
       (setf (gethash scanner (routes router)) qc))))
-
-
 
 ;; (make-url-selector "/posts/<str:name>/")
 ;; returns nil or a plist with the environment. Should be easy to add a let around. Should I use (values match env) instead?
