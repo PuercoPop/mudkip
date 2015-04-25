@@ -43,7 +43,12 @@
              (t `(or ,@(loop :for c :in classes
                              :collect (list (class-name c) (cdr pattern))))))))))
 
-(defun query (pattern db)
+
+(defmacro query (pattern db)
+  "This macro's only purpose is to avoid quoting the pattern."
+  `(%query ',pattern ,db))
+
+(defun %query (pattern db)
   "Collect all documents in db that match the pattern."
   (let ((expanded-pattern (expand-pattern pattern)))
     (loop
