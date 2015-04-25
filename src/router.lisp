@@ -16,8 +16,12 @@
         :for value :being :the hash-values :of (routes router)
         :when (scran key url)
           (return value)))
+(defmethod find-document :around ((router router) (url string) db)
+  (let ((result (call-next-method)))
+    (if (eql 1 (length result))
+        (car result)
+        (error "Pattern associated with the URL ~A returned more than one document." url))))
 
-;; TODO: around-method to verify the query returns only one document.
 (defmethod add-route ((router router) url-selector query)
   (setf (gethash (create-scanner url-selector) (routes router)) query))
 
