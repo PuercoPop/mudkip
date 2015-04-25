@@ -4,7 +4,9 @@
    #:construct-query
    #:query-constructor
    #:names
-   #:base-class))
+   #:base-class)
+  (:documentation "The query constructor is in charge of returning a sexp that
+  mudkip:query understands from a list of values."))
 
 (in-package #:mudkip/query-constructor)
 

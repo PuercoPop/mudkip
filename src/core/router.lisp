@@ -5,7 +5,10 @@
    #:list-all-urls
    #:add-route
    #:route-not-found
-   #:multiple-documents-returned))
+   #:multiple-documents-returned)
+  (:documentation "The router maps a url with a document. It does so by holding
+  a mapping between a url-template and a query. A url template in this context
+  can be annything from a string-equal, a regexp or puri-template. "))
 
 (in-package #:mudkip/core/router)
 
