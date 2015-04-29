@@ -23,7 +23,7 @@
 (defun load-documents (site)
   "Iterate through all the loaders and load all the content."
   (dolist (loader (content-loaders site))
-    (load-content loqader site)))
+    (load-content loader site)))
 
 (defun add-document (document site)
   "Add the document to the site's database."
