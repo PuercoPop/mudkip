@@ -47,7 +47,7 @@
                 ((:file "package")
                  (:file "coleslaw-loader")
                  (:file "directory-as-content-type")))
-               (:file "router"))
+               (:file "router" :depends-on ("query-constructor")))
   :in-order-to ((asdf:test-op (asdf:load-op :mudkip-tests)))
   :perform (asdf:test-op (o c)
                     (asdf/package:symbol-call :prove 'run :mudkip-tests)))
