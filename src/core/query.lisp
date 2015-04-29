@@ -29,32 +29,46 @@
   "Given a query pattern it returns a optima pattern that corresponds."
   (let ((class (find-class (car pattern)))
         (slots-required (slots-required-by-query-pattern pattern)))
-    (if  (null slots-required)
-         (list (class-name class))
-         (let*
-             ((class-tree (build-inheritance-tree class))
-              (classes (walk-collect
-                        class-tree
-                        (lambda (x) (class-has-slots-p x slots-required)))))
-           (cond
-             ((null classes)
-              (error "No class with such slot combination: ~A" pattern))
-             ((eql 1 (length classes)) (apply #'list (class-name (car classes)) (cdr pattern)))
-             (t `(or ,@(loop :for c :in classes
-                             :collect (list (class-name c) (cdr pattern))))))))))
-
+    (if (null slots-required)
+        (list (class-name class))
+        (let*
+            ((class-tree (build-inheritance-tree class))
+             (classes (walk-collect
+                       class-tree
+                       (lambda (x) (class-has-slots-p x slots-required)))))
+          (cond
+            ((null classes)
+             (error "No class with such slot combination: ~A" pattern))
+            ((eql 1 (length classes)) (apply #'list (class-name (car classes)) (cdr pattern)))
+            (t `(or ,@(loop :for c :in classes
+                            :collect (list (class-name c) (cdr pattern))))))))))
 
 (defmacro query (pattern db)
-  "This macro's only purpose is to avoid quoting the pattern."
-  `(%query ',pattern ,db))
+  (let ((matches (gensym))
+        (expanded-pattern (expand-pattern pattern)))
+    `(loop
+       :with ,matches := nil
+       :for doc :being :the hash-values :in ,db
+       :do
+          (match doc
+            (,expanded-pattern (setf ,matches (adjoin doc ,matches))))
+       :finally (return ,matches))))
 
-(defun %query (pattern db)
-  "Collect all documents in db that match the pattern."
-  (let ((expanded-pattern (expand-pattern pattern)))
-    (loop
-      :with matches := nil
-      :for doc being the hash-values in db
-      :do
-         (match doc
-           (expanded-pattern (setf matches (adjoin doc matches))))
-      :finally (return matches))))
+;; (defmacro query (pattern db)
+;;   "This macro's only purpose is to avoid quoting the pattern."
+;;   `(%query ',pattern ,db))
+
+;; (defmacro make-match (pattern doc &body body)
+;;   `(match ,doc
+;;      ((,pattern ,@body))))
+
+;; (defun %query (pattern db)
+;;   "Collect all documents in db that match the pattern."
+;;   (let ((expanded-pattern (expand-pattern pattern)))
+;;     (loop
+;;       :with matches := nil
+;;       :for doc being the hash-values in db
+;;       :do
+;;          (format t "Expanded pattern: ~A.~%Document: ~A.~%~%" expanded-pattern doc)
+;;          (make-match expanded-pattern doc (setf matches (adjoin doc matches)))
+;;       :finally (return matches))))
