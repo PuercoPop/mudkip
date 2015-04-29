@@ -17,9 +17,13 @@
 
 (defclass foo-doc (document)
   ((foo :initarg :foo :reader foo)
-   (title :initarg :title :reader tittle)
+   (title :initarg :title :reader title)
    (author :initarg :author :reader author))
   (:documentation "A run of the mill document type."))
+
+(defmethod print-object ((obj foo-doc) stream)
+  (print-unreadable-object (obj stream :type t)
+    (format stream "title: ~A, author: ~A" (title obj) (author obj))))
 
 (defparameter +sample-doc-db+
   (let
