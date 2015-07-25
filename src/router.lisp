@@ -17,8 +17,8 @@
 
 (defclass router ()
   ((routes :initarg :db :initform (make-hash-table) :reader routes
-           :documentation "A hash table mapping a regexp with a document query
-           pattern constructor.")))
+           :documentation "A mapping from a regexp to a document query pattern
+           constructor.")))
 
 ;; /posts/<title:str>/
 (defmethod find-document ((router router) (url string) db)
@@ -36,10 +36,13 @@
                  (return (query pattern db)))))))
 
 (defmethod find-document :around ((router router) (url string) db)
-  (let ((result (call-next-method)))
-    (if (eql 1 (length result))
-        (car result)
-        (error "Pattern associated with the URL ~A returned more than one document." url))))
+  (let* ((result (call-next-method))
+         (length (length result)))
+    (cond ((zerop length) result)
+          ((= 1 length) (car result))
+          (t
+           (error "Pattern associated with the URL ~A returned more than one document.~%~% Results: ~{~A~^, ~}"
+                  url result)))))
 
 (defmethod add-route ((router router) url-selector query)
   (multiple-value-bind (scanner register-names) (create-scanner url-selector)
