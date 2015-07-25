@@ -1,24 +1,42 @@
 (defpackage #:mudkip/core/documents
-  (:use :cl)
-  (:import-from :alexandria :make-keyword)
-  (:import-from :closer-mop :class-slots
-                            :slot-definition-name)
-  (:import-from :flexi-streams :string-to-octets)
-  (:import-from :ironclad :make-digest
-                          :update-digest
-                          :sha1-buffer)
+  (:use #:cl)
+  (:import-from #:alexandria
+                #:make-keyword)
+  (:import-from #:closer-mop
+                #:class-slots
+                #:slot-definition-name)
+  (:import-from #:flexi-streams
+                #:string-to-octets)
+  (:import-from #:ironclad
+                #:make-digest
+                #:update-digest
+                #:sha1-buffer)
+  (:import-from #:mudkip/core/utils
+                #:build-inheritance-tree
+                #:walk-collect)
   (:export
    #:document
    #:id
+   #:find-document-class
    #:render-text
    #:read-content
    #:parse-hearder))
-(in-package :mudkip/core/documents)
+
+(in-package #:mudkip/core/documents)
 
 
 (defclass document ()
   ((id :reader id :documentation "A SHA-1 of every slot except the id slot preprended with document."))
   (:documentation "Document base class."))
+
+(defun find-document-class (symbol)
+  "Looks for the class named by the `symbol' in the inheritance tree of the
+  base `document' class."
+  (let ((result (walk-collect (build-inheritance-tree (find-class 'document))
+                              (lambda (class) (string= (symbol-name symbol)
+                                                       (symbol-name (class-name class)))))))
+    (when (= 1 (length result))
+      (first result))))
 
 (defun serialize-slots (obj)
   "Serialize all the slots of the instance except for the slot named id."
@@ -35,6 +53,7 @@
                    (class-slots (class-of obj))))))
 
 (defun hash-slots (obj)
+  "Return a hashcode of the slots of the object."
   (let*
       ((sha1 (make-digest :sha1))
        (slots-as-strings (serialize-slots obj)))

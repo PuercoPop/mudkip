@@ -26,8 +26,8 @@
         (class-slots (ensure-finalized class)))))
 
 (defun expand-pattern (pattern)
-  "Given a query pattern it returns a optima pattern that corresponds."
-  (let ((class (find-class (car pattern)))
+  "Given a query pattern it returns a trivia pattern that corresponds."
+  (let ((class (find-document-class (car pattern)))
         (slots-required (slots-required-by-query-pattern pattern)))
     (if (null slots-required)
         (list (class-name class))
