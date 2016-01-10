@@ -1,19 +1,13 @@
 (defpackage #:mudkip/query-test
-  (:use :cl :prove :mudkip/core :mudkip-test-mocks))
-(in-package :mudkip/query-test)
+  (:use #:cl #:prove #:mudkip/core #:mudkip-test-mocks)
+  ;; Internal symbols
+  (:import-from #:mudkip/core/query #:slots-required-by-query-pattern
+                                    #:class-has-slots-p
+                                    #:expand-pattern))
+(in-package #:mudkip/query-test)
 
 (plan 11)
 (diag "test-parse-slots-of-query-pattern")
-
-(let ((internal-symbols '(slots-required-by-query-pattern
-                          class-has-slots-p
-                          expand-pattern))
-      (package-to-import :mudkip/core/query))
-  (diag
-   (format nil "Importing some internal symbols from ~A " package-to-import))
-  (dolist (s internal-symbols)
-    (shadowing-import (find-symbol (symbol-name s) package-to-import))))
-
 
 (ok (not (slots-required-by-query-pattern '(document))))
 (ok (member 'author
