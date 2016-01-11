@@ -11,13 +11,9 @@
                 #:make-digest
                 #:update-digest
                 #:sha1-buffer)
-  (:import-from #:mudkip/core/utils
-                #:build-inheritance-tree
-                #:walk-collect)
   (:export
    #:document
    #:id
-   #:find-document-class
    #:render-text
    #:read-content
    #:parse-hearder))
@@ -28,15 +24,6 @@
 (defclass document ()
   ((id :reader id :documentation "A SHA-1 of every slot except the id slot preprended with document."))
   (:documentation "Document base class."))
-
-(defun find-document-class (symbol)
-  "Looks for the class named by the `symbol' in the inheritance tree of the
-  base `document' class."
-  (let ((result (walk-collect (build-inheritance-tree (find-class 'document))
-                              (lambda (class) (string= (symbol-name symbol)
-                                                       (symbol-name (class-name class)))))))
-    (when (= 1 (length result))
-      (first result))))
 
 (defun serialize-slots (obj)
   "Serialize all the slots of the instance except for the slot named id."
