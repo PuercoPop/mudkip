@@ -38,7 +38,7 @@
 (defmethod find-document :around ((router router) (url string) db)
   (let* ((result (call-next-method))
          (length (length result)))
-    (cond ((zerop length) result)
+    (cond ((zerop length) (signal 'route-not-found))
           ((= 1 length) (car result))
           (t
            (error "Pattern associated with the URL ~A returned more than one document.~%~% Results: ~{~A~^, ~}"
