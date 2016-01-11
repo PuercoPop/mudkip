@@ -6,7 +6,10 @@
                 #:with-unique-names)
   (:import-from #:closer-mop
                 #:slot-definition-name
-                #:ensure-finalized)
+                #:ensure-finalized
+                #:slot-value-using-class
+                #:standard-effective-slot-definition
+                #:subclassp)
   (:export
    #:query)
   (:documentation " Provides a way to query a collection of documents using the
@@ -16,23 +19,39 @@ all the slots specified in bound to their corresponding value. "))
 
 (in-package #:mudkip/core/query)
 
+(defun find-slot (slot candidate)
+  (find slot (class-slots candidate) :key #'slot-definition-name :test #'string=))
+
+(defun slotp (candidate)
+  "Return t if CANDIDATE is a slot. "
+  (subclassp (class-of candidate)
+             'standard-effective-slot-definition))
+
+(defun slot-value* (object potential-slot)
+  "Similar to slot-value but uses a slot object, instead of a symbol."
+  (slot-value-using-class (class-of potential-slot) object potential-slot))
+
 (defun make-matcher (pattern)
   (let ((base-class (find-class (car pattern))))
     (labels ((is-of-subclass-p (candidate)
-               (c2mop:subclassp (class-of candidate) base-class))
+               (subclassp (class-of candidate) base-class))
              (has-slot-p (slot candidate)
                (member slot
                        (class-slots (class-of candidate))
                        :key #'slot-definition-name
                        :test #'string=)))
       (lambda (candidate)
-        (and (is-of-subclass-p candidate)
-             (loop :for (slot value) :on (cdr pattern) :by #'cddr
-                   :do (unless (and (has-slot-p slot candidate)
-                                    (equalp (slot-value candidate slot)
-                                            value))
-                         (return nil))
-                   :finally (return candidate)))))))
+        (let (slot-object)
+          (and (is-of-subclass-p candidate)
+               (loop :for (slot value) :on (cdr pattern) :by #'cddr
+                     :do (unless (and (prog1 (has-slot-p slot candidate)
+                                        (setf slot-object (find-slot slot (class-of candidate))))
+                                      (slotp slot-object)
+                                      (equalp (slot-value* candidate slot-object)
+                                              value))
+                           (return nil))
+                         (setf slot-object nil)
+                     :finally (return candidate))))))))
 
 
 (defun %query (pattern collection)
