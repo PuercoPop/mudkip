@@ -60,7 +60,7 @@
 (defgeneric render-text (text format)
   (:documentation "Render TEXT of the given FORMAT to HTML for display."))
 
-(defun read-content (file &optional (header "-----") (file-encoding '(:utf-8)))
+(defun read-content (file &optional (header "-----") (file-encoding :utf-8))
   "Returns a plist of metadata from FILE with :text holding the content as a
   string."
   (with-open-file (in file :external-format file-encoding)
